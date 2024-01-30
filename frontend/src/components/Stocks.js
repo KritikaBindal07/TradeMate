@@ -7,20 +7,10 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import "./trader-portal.css";
 import banner from "./banner.jpg";
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
+import { useLocation } from "react-router-dom";
 
 const getLocalData = () => {
-  const list = localStorage.getItem("suppliers");
-
-  if (list) {
-    return JSON.parse(list);
-  } else {
-    return [];
-  }
-};
-const getSupplierEnteries = () => {
-  const list = localStorage.getItem("SupplierEnteries");
+  const list = localStorage.getItem("stocks");
 
   if (list) {
     return JSON.parse(list);
@@ -32,13 +22,10 @@ const getSupplierEnteries = () => {
 const Stocks = () => {
   const [popup, setPopup] = useState(false);
   const [inputdata, setInputData] = useState("");
+  const [itemsQuantity, setItemsQuantity] = useState("");
   const [items, setItems] = useState(getLocalData());
   const [isEditItem, setIsEditItem] = useState("");
   const [toggleButton, setToggleButton] = useState(false);
-  const [enteriesPop, setEnteriesPop] = useState(false);
-  const [SentriesMap, setSentriesMap] = useState({});
-  const [records, setRecords] = useState(getSupplierEnteries());
-
   const [expandedIndex, setExpandedIndex] = useState(null);
 
   const handleAccordionChange = (index) => {
@@ -49,7 +36,7 @@ const Stocks = () => {
   };
   const navigate = useNavigate();
   const navigateToCustomer = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     navigate("/dash");
   };
 
@@ -59,37 +46,41 @@ const Stocks = () => {
   // add the items
   const addItem = () => {
     setPopup((prev) => !prev);
-    if (!inputdata) {
+    if (!inputdata || !itemsQuantity) {
       alert("plz fill the data");
     } else if (inputdata && toggleButton) {
       setItems(
         items.map((curElem) => {
           if (curElem.id === isEditItem) {
-            return { ...curElem, name: inputdata };
+            return { ...curElem, name: inputdata, quantity: itemsQuantity };
           }
           return curElem;
         })
       );
 
       setInputData([]);
+      setItemsQuantity([]);
       setIsEditItem(null);
       setToggleButton(false);
     } else {
       const myNewTnputData = {
         id: new Date().getTime().toString(),
         name: inputdata,
+        quantity: itemsQuantity,
       };
       setItems([...items, myNewTnputData]);
       setInputData("");
+      setItemsQuantity("");
     }
   };
 
-  const editItem = (index) => {
+  const editItem = (id) => {
     const item_todo_edited = items.find((curElem) => {
-      return curElem.id === index;
+      return curElem.id === id;
     });
     setInputData(item_todo_edited.name);
-    setIsEditItem(index);
+    setItemsQuantity(item_todo_edited.quantity);
+    setIsEditItem(id);
     setToggleButton(true);
   };
 
@@ -100,114 +91,24 @@ const Stocks = () => {
     });
     setItems(updatedItem);
   };
-  const EnteriesPopup = () => {
-    setEnteriesPop((prev) => !prev);
-  };
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     DashboardValid();
-  //     setData(true);
-  //   }, 2000);
-  // }, []);
-  const HandleEnteries = (e, customerId) => {
-    console.log(customerId);
-    const name = e.target.name;
-    const value = e.target.value;
-
-    setSentriesMap((prevSentriesMap) => {
-      const updatedSentriesMap = { ...prevSentriesMap };
-
-      // Ensure entries for the current customer exist in the map
-      if (!updatedSentriesMap[customerId]) {
-        updatedSentriesMap[customerId] = {};
-      }
-
-      // Update the specific entry for the current customer
-      updatedSentriesMap[customerId] = {
-        ...updatedSentriesMap[customerId],
-        [name]: value,
-      };
-
-      return updatedSentriesMap;
-    });
-  };
-  const HandleSubmit = (e, customerId) => {
-    console.log(customerId);
-    setEnteriesPop((prev) => !prev);
-    const entryId = new Date().getTime().toString();
-    setRecords((prevRecords) => ({
-      ...prevRecords,
-      [customerId]: [
-        ...(prevRecords[customerId] || []),
-        { ...SentriesMap[customerId], id: entryId },
-      ],
-    }));
-  };
-
-  const deleteEntry = (customerId, entryId) => {
-    setRecords((prevRecords) => {
-      const updatedRecords = { ...prevRecords };
-
-      if (updatedRecords[customerId]) {
-        updatedRecords[customerId] = updatedRecords[customerId].filter(
-          (entry) => entry.id !== entryId
-        );
-      }
-
-      return updatedRecords;
-    });
-
-    // Update the local storage
-    localStorage.setItem("Enteries", JSON.stringify(records));
-  };
-
-  //download pdf
-
-  const downloadPDF = (id) => {
-    const pdf = new jsPDF();
-    pdf.text("Supplies Records", 20, 10);
-    console.log(records[id]);
-    const headers = ["Date", "Items Purchased", "Units"];
-
-    const data = records[id].map((entry) => [
-      entry.date,
-      entry.items,
-      entry.units,
-    ]);
-
-    //styles
-    const headStyles = {
-      fillColor: [252, 206, 122],
-      textColor: [0, 0, 0],
-      minCellHeight: 10,
-      fontSize: 12,
-      halign: "center",
-    };
-    const dataStyles = {
-      textColor: [0, 0, 0],
-      minCellHeight: 12,
-      fontSize: 12,
-      halign: "center",
-    };
-    pdf.autoTable({
-      head: [headers],
-      body: data,
-      startY: 20,
-      headStyles: headStyles,
-      bodyStyles: dataStyles,
-    });
-
-    pdf.save("supplier_records.pdf");
-  };
 
   //adding local storage
   useEffect(() => {
-    localStorage.setItem("suppliers", JSON.stringify(items));
+    localStorage.setItem("stocks", JSON.stringify(items));
   }, [items]);
+
+  const location = useLocation();
+
   useEffect(() => {
-    localStorage.setItem("SupplierEnteries", JSON.stringify(records));
-  }, [records]);
+    if (location.pathname.includes("/stocks")) {
+      const lowQuantityItems = items.filter((curElem) => curElem.quantity < 20);
+
+      if (lowQuantityItems.length > 0) {
+        const names = lowQuantityItems.map((item) => item.name).join(", ");
+        alert(`Low quantity alert: ${names} have less than 20 items.`);
+      }
+    }
+  }, [location.pathname]);
 
   return (
     <>
@@ -238,8 +139,10 @@ const Stocks = () => {
               Suppliers
             </a>
             <a
-            href="#stocks"
-             class="tab-bar-heading selected-section" data-target="Stocks-description">
+              href="#stocks"
+              class="tab-bar-heading selected-section"
+              data-target="Stocks-description"
+            >
               Stocks
             </a>
           </div>
@@ -255,6 +158,13 @@ const Stocks = () => {
                     value={inputdata}
                     onChange={(e) => setInputData(e.target.value)}
                   />
+                  <input
+                    id="cst-name"
+                    placeholder="Enter quantity of items"
+                    type="number"
+                    value={itemsQuantity}
+                    onChange={(e) => setItemsQuantity(e.target.value)}
+                  />
                   {toggleButton ? (
                     <i className="fa fa-edit add-btn" onClick={addItem}></i>
                   ) : (
@@ -268,7 +178,7 @@ const Stocks = () => {
             )}
 
             <div id="add-customers-btn" class="add-btn">
-              <button onClick={(e) => showPopup(e)}>Add Items</button>
+              <button onClick={(e) => showPopup(e)}>Add Item</button>
             </div>
 
             {/* //accordion */}
@@ -305,123 +215,28 @@ const Stocks = () => {
                     <AccordionDetails>
                       <Typography>
                         <div className="del">
-                          <button
-                            onClick={() => EnteriesPopup(currentCustomerId)}
-                          >
-                            Add Enteries
-                          </button>
-
-                          {enteriesPop && (
-                            <div id="enteries-popup" className="enteries-popup">
-                              <input
-                                name="date"
-                                placeholder="Enter Date"
-                                type="text"
-                                value={SentriesMap[curElem.id]?.date || ""}
-                                onChange={(e) => HandleEnteries(e, curElem.id)}
-                              />
-                              <input
-                                name="items"
-                                placeholder="Enter Items"
-                                type="text"
-                                value={SentriesMap[curElem.id]?.items || ""}
-                                onChange={(e) => HandleEnteries(e, curElem.id)}
-                              />
-                              <input
-                                name="units"
-                                placeholder="Enter no. of units purchased"
-                                type="number"
-                                value={SentriesMap[curElem.id]?.units || ""}
-                                onChange={(e) => HandleEnteries(e, curElem.id)}
-                              />
-                              <button
-                                onClick={(e) => HandleSubmit(e, curElem.id)}
-                              >
-                                OK
-                              </button>
-                            </div>
-                          )}
-
                           <button onClick={() => deleteItem(curElem.id)}>
-                            Delete Supplier
+                            Delete Item
                           </button>
-                          <button
-                            onClick={() => downloadPDF(currentCustomerId)}
-                          >
-                            Download Pdf
+                          <button onClick={() => editItem(curElem.id)}>
+                            Edit Item
                           </button>
                         </div>
 
                         <div class="enteries-header">
-                          <div class="date">Date</div>
+                          <div class="you-got">ITEM</div>
 
-                          <div class="you-got">ITEMS PURCHASED</div>
-
-                          <div class="you-gave"> UNITS</div>
-
-                          <div className="operation">OPERATION</div>
+                          <div class="you-gave"> No. of Items</div>
                         </div>
 
-                        {records[curElem.id] &&
-                          records[curElem.id].length > 0 && (
-                            <div>
-                              {records[curElem.id].map((entry) => (
-                                <div class="enteries" key={entry.id}>
-                                  <div class="date"> {entry.date}</div>
-                                  <div class="you-got">{entry.items}</div>
-                                  <div class="you-gave">{entry.units}</div>
-                                  {/* <div className="total">
-                                        {parseInt(entry.youGot) -
-                                          parseInt(entry.youGave) >=
-                                        0
-                                          ? `+₹${
-                                              parseInt(entry.youGot) -
-                                              parseInt(entry.youGave)
-                                            }`
-                                          : `-₹${Math.abs(
-                                              parseInt(entry.youGot) -
-                                                parseInt(entry.youGave)
-                                            )}`}
-                                      </div> */}
-                                  <div className="del">
-                                    <button
-                                      onClick={() =>
-                                        deleteEntry(curElem.id, entry.id)
-                                      }
-                                    >
-                                      Delete
-                                    </button>
-                                    {/* <button onClick={() => EditTrans(transaction.id)}>
-                                Edit
-                              </button> */}
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-
-                        {/* <div class="enteries">
-                          <div class="date">04/11/23</div>
-
-                          <div class="you-got">ITEM 1</div>
-
-                          <div class="you-gave">24 / 50</div>
-                          <div className="del">
-                            <button>Delete</button>
-                            
-                          </div>
-                        </div> */}
-                        {/* <div class="enteries">
-                          <div class="date">05/12/23</div>
-
-                          <div class="you-got">ITEM 2</div>
-
-                          <div class="you-gave">13 / 100</div>
-                          <div className="del">
-                            <button>Delete</button>
-                            
-                          </div>
-                        </div> */}
+                        <div
+                          className={`enteries ${
+                            curElem.quantity < 20 ? "low-quantity" : ""
+                          }`}
+                        >
+                          <div class="date"> {curElem.name}</div>
+                          <div className="you-got">{curElem.quantity}</div>
+                        </div>
                       </Typography>
                     </AccordionDetails>
                   </Accordion>
@@ -429,87 +244,8 @@ const Stocks = () => {
               })}
             </div>
           </div>
-
-          <div class="right-side" id="suppliers">
-            <div id="customer-popup" class="pop-up">
-              <input id="cst-name" placeholder="Enter Name" type="text" />
-              <button onclick="getValue()">OK</button>
-            </div>
-
-            <div id="add-customers-btn" class="add-btn">
-              <button>Add Supplier</button>
-            </div>
-            <div id="accordion" class="accordion">
-              <div class="accordion-content-box">
-                <div class="accordion-label">
-                  <div class="name">Ayush Mehra</div>
-                </div>
-
-                <div class="accordion-content">
-                  <div class="enteries-header">
-                    <div class="date">Date</div>
-
-                    <div class="you-got">YOU GOT</div>
-
-                    <div class="you-gave">YOU GAVE</div>
-                  </div>
-                  <div class="enteries">
-                    <div class="date">01/12/23</div>
-
-                    <div class="you-got">₹1000</div>
-
-                    <div class="you-gave">₹10000</div>
-                  </div>
-
-                  <div class="enteries">
-                    <div class="date">05/12/23</div>
-
-                    <div class="you-got">₹100</div>
-
-                    <div class="you-gave">₹1000</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-content-box">
-                <div class="accordion-label">Vivek Sharma</div>
-
-                <div class="accordion-content">
-                  <div class="enteries-header">
-                    <div class="date">Date</div>
-
-                    <div class="you-got">YOU GOT</div>
-
-                    <div class="you-gave">YOU GAVE</div>
-                  </div>
-                  <div class="enteries">
-                    <div class="date">04/11/23</div>
-
-                    <div class="you-got">₹1000</div>
-
-                    <div class="you-gave">₹10000</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-content-box">
-                <div class="accordion-label">Nancy Thakur</div>
-
-                <div class="accordion-content">
-                  <div class="enteries-header">
-                    <div class="date">Date</div>
-
-                    <div class="you-got">YOU GOT</div>
-
-                    <div class="you-gave">YOU GAVE</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-      
     </>
   );
 };

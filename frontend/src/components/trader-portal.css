@@ -363,3 +363,7 @@ input{
 button{
   cursor: pointer;
 }
+.low-quantity{
+  background-color: rgb(236, 69, 69);
+  opacity: 0.9;
+}
