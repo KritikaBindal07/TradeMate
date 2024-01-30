@@ -1,0 +1,21 @@
+/* footer */
+.footer{
+    background: #1E1E1E;
+    min-height: 40vh;
+    color: #fff;
+    padding: 3rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2.2rem;
+}
+h1,h3{
+    padding-bottom: 0.4rem;
+}
+p{
+    padding: 0.2rem 0;
+    font-size: 1.1rem;
+}
+.copyright{
+    padding-top: 4.5rem;
+}

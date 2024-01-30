@@ -1,0 +1,365 @@
+/* @font-face {
+  font-family: "Canela Web";
+  src: url("/font/Canela-Regular-Web.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Canela Deck Web";
+  src: url("/font/CanelaDeck-Regular-Web.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GT America Bold";
+  src: url("/font/GT-America-Standard-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GT America Medium";
+  src: url("/font/GT-America-Standard-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GT America Regular";
+  src: url("/font/GT-America-Standard-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "anziano";
+  src: url("/font/AnzianoPro-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Albertus Medium";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/font/Albertus-Medium.ttf") format("truetype");
+} */
+* {
+  box-sizing: border-box;
+}
+body,
+html {
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+}
+.banner {
+  height: 40vh;
+}
+.banner img {
+  width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+.main-container {
+  display: flex;
+  gap: 2rem;
+  min-height: 70vh;
+  /* background: #e2e0e0; */
+  background-color: rgba(0, 0, 0, 0.02);
+}
+.left-menu {
+  width: 18%;
+  min-width: 12rem;
+  /* min-width: max-content; */
+  border-right: 1px solid rgba(0, 0, 0, 0.75);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0rem;
+  background-color: #fff;
+  /* background-color: rgb(252, 206, 122); */
+}
+
+.left-menu div {
+  display: flex;
+  border-bottom: 3px solid rgba(0, 0, 0, 0.25);
+  align-items: center;
+  cursor: pointer;
+}
+.left-menu a {
+  text-decoration: none;
+  padding: 1.2rem 0rem 1.2rem 2rem;
+  font-family: "Albertus Medium";
+  color: #403333;
+  font-size: 1.3rem;
+  border-bottom: 3px solid rgba(0, 0, 0, 0.25);
+}
+.selected-section {
+  color: #fff !important;
+  background: #000;
+  border-bottom: 1px solid #000;
+}
+.selected-section p {
+  color: #fff !important;
+}
+.right-side {
+  padding: 2rem 0;
+  padding-right: 1rem;
+  width: 100%;
+  /* background-color: rgba(0, 0, 0, 0.02); */
+  display: none;
+  position: relative;
+}
+#customers{
+  display: block;
+}
+.flex-row{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.pop-up {
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: absolute;
+  top: 0%;
+  right: 40%;
+  margin: auto;
+  background-color: rgb(235, 230, 221);
+  border-radius: 1rem;
+  padding: 3rem;
+}
+.pop-up button {
+  width: max-content;
+  margin: 0.2rem auto;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  background-color: black;
+  color: #fff;
+  cursor: pointer;
+  font-family: "Albertus Medium";
+}
+.pop-up input {
+  border: none;
+  padding: 3rem;
+  background-color: rgb(235, 230, 221);
+  border-radius: 1rem;
+}
+.enteries-popup{
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: absolute;
+  top: 0%;
+  right: 42%;
+  margin: auto;
+  background-color: rgb(235, 230, 221);
+  border-radius: 1rem;
+  padding: 3rem;
+}
+.enteries-popup input{
+  border: none;
+  padding: 1.2rem;
+  background-color: rgb(235, 230, 221);
+  border-radius: 1rem;
+
+}
+.enteries-popup button {
+  width: max-content;
+  margin: 0.6rem auto;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  background-color: black;
+  color: #fff;
+  cursor: pointer;
+  font-family: "Albertus Medium";
+}
+.add-btn {
+  margin-bottom: 1rem;
+}
+.add-btn button {
+  padding: 0.7rem;
+  border-radius: 5rem;
+  background-color: rgb(252, 206, 122);
+  color: #fff;
+  font-weight: 600;
+  font-family: "GT America Regular";
+  font-size: 1.25rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 4px 4px #403333;
+}
+.add-btn button:hover {
+  background-color: #fff;
+  color: black;
+}
+.customer-section {
+  width: 100%;
+}
+.customer-info {
+  display: flex;
+  width: 80%;
+  margin: auto;
+  justify-content: space-between;
+  font-family: "Albertus Medium";
+  font-size: 1.3rem;
+  color: black;
+  cursor: pointer;
+  border-radius: 1rem;
+  background-color: rgb(252, 206, 122);
+  border: 2px solid rgb(252, 206, 122);
+  padding: 1rem 1.5rem;
+  /* color: #403333; */
+  margin-top: 1rem;
+  letter-spacing: 1px;
+}
+.accordion-label {
+  position: relative;
+  display: flex;
+  padding: 0.7rem 1rem 0.7rem 1.4rem;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  background: #fff;
+  color: #000;
+  font-family: "Albertus Medium";
+  font-size: 1.1rem;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 1.8rem;
+  cursor: pointer;
+}
+.accordion-label::before {
+  content: "+";
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  font-size: 1.2em;
+
+  color: rgba(0, 0, 0, 0.4);
+  /* justify-content: space-between; */
+}
+.accordion-content-box.active-accordion .accordion-label::before {
+  content: "x";
+  font-family: "GT America Regular";
+  position: absolute;
+  top: 50%;
+  right: 26px;
+  transform: translateY(-50%);
+  font-size: 1.1em;
+
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.accordion-content-box {
+  position: relative;
+}
+.accordion-content {
+  /* display: flex;  */
+  padding: 0rem 1.5rem;
+  flex-direction: row;
+  align-items: center;
+  gap: 32.5625rem;
+  background: #fff;
+  color: #000;
+  text-align: justify;
+  font-family: "GT America Regular";
+  font-size: 1.1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.7rem;
+  margin-bottom: 1rem;
+
+  position: relative;
+  left: 0;
+  height: 0;
+  overflow-x: hidden;
+  /* overflow-y: auto; */
+  transition: 0.5s;
+}
+.enteries {
+  display: flex;
+  justify-content: space-between;
+  width: 96%;
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.08);
+  padding: 0.8rem 1rem;
+  border-radius: 0.3rem;
+  margin-bottom: 0.6rem;
+}
+.enteries-header {
+  display: flex;
+  justify-content: space-between;
+  width: 96%;
+  margin: 0 auto;
+  padding: 0.8rem 1rem;
+}
+.enteries-header div {
+  min-width: 5rem;
+}
+.enteries div {
+  min-width: 4rem;
+}
+.accordion-content p {
+  margin: 0;
+}
+.del button{
+  padding: 0.3rem;
+  background-color: black;
+  color: #fff;
+  border-radius: 6px;
+  margin-right: 0.5rem;
+}
+.row{
+  display: flex;
+}
+.del-cust{
+
+ width: 10%;
+}
+.del-cust button{
+  z-index: 100000;
+  padding: 0.3rem 0.5rem;
+  background-color:rgb(252, 206, 122) ;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+
+  border-radius: 6px;
+  margin-right: 0.5rem;
+ }
+.accordion-content-box.active-accordion .accordion-content {
+  height: max-content;
+  padding: 0.9rem 1.5rem;
+}
+.accordion-label span {
+  display: flex;
+  cursor: pointer;
+
+  align-items: center;
+}
+.accordion-label span img {
+  height: 1.6rem;
+}
+.accordion-label p {
+  margin: 0;
+}
+input{
+  border: none;
+  background-color: rgba(0, 0, 0, 0.08);
+  text-align: justify;
+  font-family: "GT America Regular";
+  font-size: 1.1rem;
+  font-style: normal;
+  /* width: 30%; */
+  margin: 0 auto;
+}
+button{
+  cursor: pointer;
+}
