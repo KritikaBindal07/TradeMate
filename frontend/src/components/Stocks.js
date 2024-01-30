@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -184,7 +184,7 @@ const Stocks = () => {
             {/* //accordion */}
             <div>
               {items.map((curElem, index) => {
-                const currentCustomerId = curElem.id;
+                // const currentCustomerId = curElem.id;
                 return (
                   <Accordion
                     expanded={expandedIndex === index}

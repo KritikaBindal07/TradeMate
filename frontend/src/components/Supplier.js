@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -8,7 +8,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import "./trader-portal.css";
 import banner from "./banner.jpg";
 import jsPDF from "jspdf";
-import autoTable from 'jspdf-autotable'
+// import autoTable from 'jspdf-autotable'
 
 const getLocalData = () => {
   const list = localStorage.getItem("suppliers");
@@ -44,7 +44,7 @@ const Supplier = () => {
   const handleAccordionChange = (index) => {
     setExpandedIndex((prevIndex) => (prevIndex === index ? null : index));
   };
-  const showPopup = (e) => {
+  const showPopup = () => {
     setPopup((prev) => !prev);
   };
   const navigate = useNavigate();
@@ -531,7 +531,7 @@ const Supplier = () => {
           </div>
         </div>
       </div>
-      )
+      
     </>
   );
 };

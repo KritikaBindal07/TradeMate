@@ -6,12 +6,11 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { LoginContext } from "./ContextProvider/Context";
-import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import "./trader-portal.css";
 import banner from "./banner.jpg";
 import jsPDF from "jspdf";
-import autoTable from 'jspdf-autotable'
+// import autoTable from "jspdf-autotable";
 
 const getLocalData = () => {
   const list = localStorage.getItem("mytodoList");
@@ -50,11 +49,11 @@ const Dashboard = () => {
   const [toggleButton, setToggleButton] = useState(false);
   const [entriesMap, setEntriesMap] = useState({});
 
-  const [enteries, setEnteries] = useState({
-    date: "",
-    youGot: "",
-    youGave: "",
-  });
+  // const [enteries, setEnteries] = useState({
+  //   date: "",
+  //   youGot: "",
+  //   youGave: "",
+  // });
   const [expandedIndex, setExpandedIndex] = useState(null);
 
   const handleAccordionChange = (index) => {
@@ -196,14 +195,14 @@ const Dashboard = () => {
     }
   };
 
-  const editItem = (index) => {
-    const item_todo_edited = items.find((curElem) => {
-      return curElem.id === index;
-    });
-    setInputData(item_todo_edited.name);
-    setIsEditItem(index);
-    setToggleButton(true);
-  };
+  // const editItem = (index) => {
+  //   const item_todo_edited = items.find((curElem) => {
+  //     return curElem.id === index;
+  //   });
+  //   setInputData(item_todo_edited.name);
+  //   setIsEditItem(index);
+  //   setToggleButton(true);
+  // };
 
   // delete items
   const deleteItem = (id) => {
@@ -241,34 +240,33 @@ const Dashboard = () => {
     console.log(records[id]);
     const headers = ["Date", "You Got", "You Gave", "Balance"];
 
-    const data = records[id].map(entry => [
+    const data = records[id].map((entry) => [
       entry.date,
       entry.youGot,
       entry.youGave,
-      Math.abs(parseInt(entry.youGot) - parseInt(entry.youGave))
+      Math.abs(parseInt(entry.youGot) - parseInt(entry.youGave)),
     ]);
 
     //styles
     const headStyles = {
-      fillColor: [252, 206, 122], 
+      fillColor: [252, 206, 122],
       textColor: [0, 0, 0],
       minCellHeight: 10,
       fontSize: 12,
-      halign: 'center'
+      halign: "center",
     };
     const dataStyles = {
-      textColor: [0, 0, 0], 
+      textColor: [0, 0, 0],
       minCellHeight: 12,
       fontSize: 12,
-      halign: 'center'
- 
+      halign: "center",
     };
     pdf.autoTable({
       head: [headers],
       body: data,
       startY: 20,
       headStyles: headStyles,
-      bodyStyles: dataStyles
+      bodyStyles: dataStyles,
     });
 
     pdf.save("customer_transactions.pdf");
@@ -527,84 +525,6 @@ const Dashboard = () => {
                 })}
               </div>
             </div>
-
-            {/* <div class="right-side" id="suppliers">
-              <div id="customer-popup" class="pop-up">
-                <input id="cst-name" placeholder="Enter Name" type="text" />
-                <button onclick="getValue()">OK</button>
-              </div>
-
-              <div id="add-customers-btn" class="add-btn">
-                <button>Add Supplier</button>
-              </div>
-              <div id="accordion" class="accordion">
-                <div class="accordion-content-box">
-                  <div class="accordion-label">
-                    <div class="name">Ayush Mehra</div>
-                  </div>
-
-                  <div class="accordion-content">
-                    <div class="enteries-header">
-                      <div class="date">Date</div>
-
-                      <div class="you-got">YOU GOT</div>
-
-                      <div class="you-gave">YOU GAVE</div>
-                    </div>
-                    <div class="enteries">
-                      <div class="date">01/12/23</div>
-
-                      <div class="you-got">₹1000</div>
-
-                      <div class="you-gave">₹10000</div>
-                    </div>
-
-                    <div class="enteries">
-                      <div class="date">05/12/23</div>
-
-                      <div class="you-got">₹100</div>
-
-                      <div class="you-gave">₹1000</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="accordion-content-box">
-                  <div class="accordion-label">Vivek Sharma</div>
-
-                  <div class="accordion-content">
-                    <div class="enteries-header">
-                      <div class="date">Date</div>
-
-                      <div class="you-got">YOU GOT</div>
-
-                      <div class="you-gave">YOU GAVE</div>
-                    </div>
-                    <div class="enteries">
-                      <div class="date">04/11/23</div>
-
-                      <div class="you-got">₹1000</div>
-
-                      <div class="you-gave">₹10000</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="accordion-content-box">
-                  <div class="accordion-label">Nancy Thakur</div>
-
-                  <div class="accordion-content">
-                    <div class="enteries-header">
-                      <div class="date">Date</div>
-
-                      <div class="you-got">YOU GOT</div>
-
-                      <div class="you-gave">YOU GAVE</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
       ) : (
