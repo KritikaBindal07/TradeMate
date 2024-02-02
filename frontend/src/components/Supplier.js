@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import "./trader-portal.css";
 import banner from "./banner.jpg";
+import autoTable from 'jspdf-autotable'
 import jsPDF from "jspdf";
 // import autoTable from 'jspdf-autotable'
 

@@ -10,7 +10,7 @@ import Box from "@mui/material/Box";
 import "./trader-portal.css";
 import banner from "./banner.jpg";
 import jsPDF from "jspdf";
-// import autoTable from "jspdf-autotable";
+import autoTable from "jspdf-autotable";
 
 const getLocalData = () => {
   const list = localStorage.getItem("mytodoList");
