@@ -6,7 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "build": "react-scripts build",
     "dev": "nodemon index.js"
   },
   "keywords": [],
@@ -23,5 +22,8 @@
     "jspdf-autotable": "^3.8.1",
     "mongoose": "^6.4.6",
     "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "react-scripts": "^5.0.1"
   }
 }
