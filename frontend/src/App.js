@@ -13,6 +13,7 @@ import { useEffect, useContext, useState } from "react";
 import { LoginContext } from "./components/ContextProvider/Context";
 import About from "./components/About";
 import Stocks from "./components/Stocks";
+import ContactForm from "./components/ContactForm";
 
 function App() {
 
@@ -69,6 +70,8 @@ function App() {
               <Route path="*" element={<Error />} />
               <Route path="/suppliers" element={<Supplier/>} />
               <Route path="/stocks" element={<Stocks/>}/>
+              <Route path="/contact" element={<ContactForm />} />
+
             </Routes>
             <Footer/>
           </>

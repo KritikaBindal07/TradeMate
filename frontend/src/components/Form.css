@@ -1,0 +1,59 @@
+/* .contact-input{
+    padding-top: 1rem;
+} */
+
+.form{
+    padding-top: 2rem;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    
+}
+.contact-input label {
+    font-weight: 600;
+    font-size: 15px;
+    font-family: 'Open Sans', sans-serif;
+    padding-bottom: 11px;
+  }
+.contact-input{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    font-family: "GT America Regular";
+
+
+}
+.contact-btn{
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0;
+
+}
+.contact-btn button{
+    background-color: rgb(248, 198, 104);
+    font-weight: 600;
+    font-family: "GT America Regular";
+    font-size: 1.06rem;
+    border: none;
+    cursor: pointer;
+    box-shadow: 2px 2px #403333;
+    padding: 0.8rem 1.2rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    
+}
+.contact-btn button:hover {
+    background-color:#fff;
+    /* color: white; */
+  }
+.contact-input input{
+   
+    padding: 2rem 3rem;
+    border-radius: 1rem;
+}
+
+.contact-input textarea{
+    padding: 2rem 8rem;
+    border-radius: 5px;
+    font-size: large;
+}

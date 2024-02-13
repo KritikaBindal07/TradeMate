@@ -1,16 +1,16 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import {useEffect} from "react";
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import "./footer.css";
-
+import "./mix.css"
 const Footer = () => {
   useEffect(() => {
     AOS.init({
-      duration:1800,
+      duration: 1800,
     });
-  }, [])
+  }, []);
   return (
     <div className="footer">
       <div className="col">
@@ -46,6 +46,11 @@ const Footer = () => {
         <h3>Your feedback fuels our journey!</h3> <p>Connect with us :</p>
         <p>trademate@yopmail.com </p>
         <p>96-9678807809</p>
+        <div className="button">
+          <NavLink to="/contact">
+            <button>Contact Us</button>
+          </NavLink>
+        </div>
       </div>
     </div>
   );

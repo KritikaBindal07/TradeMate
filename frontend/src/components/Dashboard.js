@@ -352,7 +352,7 @@ const Dashboard = () => {
               </div>
 
               {/* //accordion */}
-              <div>
+             
                 {items.map((curElem, index) => {
                   const currentCustomerId = curElem.id;
                   return (
@@ -493,11 +493,11 @@ const Dashboard = () => {
                                       {parseInt(entry.youGot) -
                                         parseInt(entry.youGave) >=
                                       0
-                                        ? `-₹${
+                                        ? `+₹${
                                             parseInt(entry.youGot) -
                                             parseInt(entry.youGave)
                                           }`
-                                        : `+₹${Math.abs(
+                                        : `-₹${Math.abs(
                                             parseInt(entry.youGot) -
                                               parseInt(entry.youGave)
                                           )}`}
@@ -526,7 +526,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-        </div>
+        
       ) : (
         <Box
           sx={{

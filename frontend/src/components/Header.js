@@ -122,6 +122,14 @@ const Header = () => {
                 >
                   Profile
                 </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    logoutuser();
+                    handleClose();
+                  }}
+                >
+                  Logout
+                </MenuItem>
               </>
             )}
           </Menu>

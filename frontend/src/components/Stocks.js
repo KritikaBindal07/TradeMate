@@ -62,7 +62,20 @@ const Stocks = () => {
       setItemsQuantity([]);
       setIsEditItem(null);
       setToggleButton(false);
-    } else {
+    } else if (isEditItem !== "") { // Editing existing item
+      setItems(
+        items.map((curElem) => {
+          if (curElem.id === isEditItem) {
+            return { ...curElem, name: inputdata, quantity: itemsQuantity };
+          }
+          return curElem;
+        })
+      );
+
+      setInputData(""); // Clear input fields
+      setItemsQuantity("");
+      setIsEditItem(""); // Reset edit mode
+    }else {
       const myNewTnputData = {
         id: new Date().getTime().toString(),
         name: inputdata,
@@ -74,15 +87,24 @@ const Stocks = () => {
     }
   };
 
+  //edit items
   const editItem = (id) => {
-    const item_todo_edited = items.find((curElem) => {
-      return curElem.id === id;
-    });
-    setInputData(item_todo_edited.name);
-    setItemsQuantity(item_todo_edited.quantity);
-    setIsEditItem(id);
-    setToggleButton(true);
+    const itemToEdit = items.find((curElem) => curElem.id === id);
+    setInputData(itemToEdit.name); // Populate input fields with current data
+    setItemsQuantity(itemToEdit.quantity);
+    setIsEditItem(id); // Set the ID of the item being edited
+    showPopup(true); // Show the popup
   };
+  
+  // const editItem = (id) => {
+  //   const item_todo_edited = items.find((curElem) => {
+  //     return curElem.id === id;
+  //   });
+  //   setInputData(item_todo_edited.name);
+  //   setItemsQuantity(item_todo_edited.quantity);
+  //   setIsEditItem(id);
+  //   setToggleButton(true);
+  // };
 
   // delete items
   const deleteItem = (id) => {
@@ -153,7 +175,7 @@ const Stocks = () => {
                 <div id="customer-popup" class="pop-up">
                   <input
                     id="cst-name"
-                    placeholder="Enter Name"
+                    placeholder="Enter Item"
                     type="text"
                     value={inputdata}
                     onChange={(e) => setInputData(e.target.value)}
@@ -182,7 +204,7 @@ const Stocks = () => {
             </div>
 
             {/* //accordion */}
-            <div>
+           
               {items.map((curElem, index) => {
                 // const currentCustomerId = curElem.id;
                 return (
@@ -242,7 +264,7 @@ const Stocks = () => {
                   </Accordion>
                 );
               })}
-            </div>
+           
           </div>
         </div>
       </div>
